@@ -1,0 +1,31 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  id?: integer
+  appointmentDate: string
+  appointmentTime: string
+  vaccineType: string
+  doseNumber: integer
+  personalInfo:
+    type: object
+    required: true
+    properties:
+      name: string
+      address: string
+      email: string
+      phoneNumber: string
+  price: number
+  paymentType: string
+  insurance:
+    type: object
+    required: false
+    properties:
+      providerName: string
+      policyNumber: string
+  paymentCard:
+    type: object
+    required: false
+    properties:
+      cardNumber: integer
+      expirationDate: string
+      securityCode: integer

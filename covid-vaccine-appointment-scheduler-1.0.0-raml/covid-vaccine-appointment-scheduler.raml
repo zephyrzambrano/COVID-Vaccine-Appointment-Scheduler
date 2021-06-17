@@ -1,0 +1,111 @@
+#%RAML 1.0
+title: COVID Vaccine Appointment Scheduler
+baseUri: http://localhost:8081/
+version: 1.0
+
+types:
+  ScheduledAppointment: !include /data-types/scheduled-appointment.raml
+  AvailableAppointment: !include /data-types/available-appointment.raml
+
+/appointments:
+  /get:
+    description: get all available appointments
+    responses:
+      200:
+        body:
+          application/json:
+            type: AvailableAppointment[]
+            examples:
+              output: !include /examples/available-appointment-array-example.raml
+  /post:
+    description: create new appointment
+    body:
+      application/json:
+        type: ScheduledAppointment
+        examples:
+          input: !include /examples/0-raml\examples\scheduled-appointment-pay-with-card-no-id-example.raml
+    responses:
+      201:
+        body:
+          application/json:
+            example:
+              message: Appointment created. Appointment id: {id}
+      400:
+        body:
+          application/json:
+            example:
+              message: Unable to create appointment
+  
+  /{id}:
+    uriParameters: 
+      id: 
+        type: integer
+        minimum: 1
+    get:
+      description: get appointment by id
+      responses:
+        200:
+          body:
+            application/json:
+              type: ScheduledAppointment
+              examples:
+                output: !include /examples/scheduled-appointment-pay-with-card-example.raml
+        400:
+          body:
+            application/json:
+              example:
+                message: No appointment with that id. Could not get appointment.
+    put:
+      description: update appointment
+      body:
+        application/json:
+          type: ScheduledAppointment
+          examples: !include /examples/scheduled-appointment-pay-with-card-no-id-example.raml
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                message: Appointment successfully updated.
+        400:
+          body:
+            application/json:
+              example:
+                message: No appointment with that id. Unable to update appointment.
+    delete:
+      description: delete appointment
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                message: Appointment deleted.
+        400:
+          body:
+            application/json:
+              example:
+                message: No appointment with that id. Unable to delete appointment.
+  
+  /admin:
+    /get:
+      description: ADMINS ONLY - get all scheduled appointments (would be replaced with admin login in a real system)
+      queryParameters:
+        username:
+          required: true
+          enum: admin
+        password:
+          required: true
+          enum: admin
+      responses:
+        200:
+          body:
+            application/json:
+              type: ScheduledAppointment[]
+              examples:
+                output: !include /examples/scheduled-appointment-array-example.raml
+        401:
+          body:
+            application/json:
+              example:
+                message: You are not authorized to submit this request.
+

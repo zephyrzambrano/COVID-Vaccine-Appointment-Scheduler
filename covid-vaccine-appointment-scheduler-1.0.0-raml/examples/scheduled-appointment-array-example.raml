@@ -1,0 +1,48 @@
+#%RAML 1.0 NamedExample
+value:
+  -
+    id: 1
+    appointmentDate: 7/1/2021
+    appointmentTime: 12:00pm
+    vaccineType: Pfizer
+    doseNumber: 1
+    personalInfo:
+      name: John Doe
+      address: 123 Main Street, San Fransisco, California 00000
+      email: john.doe@gmail.com
+      phoneNumber: 732-732-7732
+    price: 10.00
+    paymentType: cash
+  -
+    id: 2
+    appointmentDate: 7/1/2021
+    appointmentTime: 12:30pm
+    vaccineType: Moderna
+    doseNumber: 2
+    personalInfo:
+      name: Joe Smith
+      address: 456 Main Street, San Fransisco, California 00000
+      email: joe.smith@gmail.com
+      phoneNumber: 777-777-7777
+    price: 10.00
+    paymentType: insurance
+    insurance:
+      providerName: CVS Health
+      policyNumber: 123456789
+  -
+    id: 3
+    appointmentDate: 7/1/2021
+    appointmentTime: 1:00pm
+    vaccineType: Pfizer
+    doseNumber: 2
+    personalInfo:
+      name: Jane Deer
+      address: 789 Main Street, San Francisco, California 00000
+      email: jane.deer@gmail.com
+      phoneNumber: 222-333-4444
+    price: 10.00
+    paymentType: card
+    paymentCard:
+      cardNumber: 123456789
+      expirationDate: 1/30
+      securityCode: 123
