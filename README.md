@@ -38,7 +38,7 @@ To-do list:
 
 ### RAML Specification
 Folder: `covid-vaccine-appointment-scheduler-1.0.0-raml`
-Contains RAML, data types, and examles.
+Contains RAML specification, data types, and examles.
 
 ### Database Setup
 

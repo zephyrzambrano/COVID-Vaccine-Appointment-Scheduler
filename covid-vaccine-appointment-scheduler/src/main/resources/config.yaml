@@ -1,0 +1,12 @@
+# Config
+
+# Port
+http:
+  port: "8081"
+
+# Database
+database:
+  url: "jdbc:postgresql://localhost:5432/covid-vaccine-appointment-scheduler?currentSchema=appointments"
+  driver: "org.postgresql.Driver"
+  username: "postgres"
+  password: "postgres"
