@@ -1,6 +1,6 @@
 # Config
 
-# Port
+# HTTP Port
 http:
   port: "8081"
 

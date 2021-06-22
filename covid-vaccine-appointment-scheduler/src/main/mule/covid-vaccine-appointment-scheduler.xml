@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd ">
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
     <flow name="covid-vaccine-appointment-scheduler-main">
         <http:listener config-ref="httpListenerConfig" path="/api/*">
             <http:response statusCode="#[vars.httpStatus default 200]">
@@ -119,141 +121,39 @@ output application/json
             </on-error-propagate>
         </error-handler>
     </flow>
-    <flow name="put:\appointments\(id):application\json:covid-vaccine-appointment-scheduler-config">
-        <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core">
-            <ee:variables>
-                <ee:set-variable variableName="id">attributes.uriParams.'id'</ee:set-variable>
-            </ee:variables>
-        </ee:transform>
-        <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-            <ee:message>
-                <ee:set-payload><![CDATA[%dw 2.0
-output application/json
----
-{
-  message: "Appointment successfully updated."
-}]]></ee:set-payload>
-            </ee:message>
-        </ee:transform>
-    </flow>
-    <flow name="delete:\appointments\(id):covid-vaccine-appointment-scheduler-config">
-        <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core">
-            <ee:variables>
-                <ee:set-variable variableName="id">attributes.uriParams.'id'</ee:set-variable>
-            </ee:variables>
-        </ee:transform>
-        <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-            <ee:message>
-                <ee:set-payload><![CDATA[%dw 2.0
-output application/json
----
-{
-  message: "Appointment deleted."
-}]]></ee:set-payload>
-            </ee:message>
-        </ee:transform>
-    </flow>
-    <flow name="get:\appointments\admin:covid-vaccine-appointment-scheduler-config">
-        <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-            <ee:message>
-                <ee:set-payload><![CDATA[%dw 2.0
-output application/json
----
-[
-  {
-    id: 1,
-    appointmentDate: "7/1/2021",
-    appointmentTime: "12:00pm",
-    vaccineType: "Pfizer",
-    doseNumber: 1,
-    personalInfo: {
-      name: "John Doe",
-      address: "123 Main Street, San Fransisco, California 00000",
-      email: "john.doe@gmail.com",
-      phoneNumber: "732-732-7732"
-    },
-    price: 10.0,
-    paymentType: "cash"
-  }, 
-  {
-    id: 2,
-    appointmentDate: "7/1/2021",
-    appointmentTime: "12:30pm",
-    vaccineType: "Moderna",
-    doseNumber: 2,
-    personalInfo: {
-      name: "Joe Smith",
-      address: "456 Main Street, San Fransisco, California 00000",
-      email: "joe.smith@gmail.com",
-      phoneNumber: "777-777-7777"
-    },
-    price: 10.0,
-    paymentType: "insurance",
-    insurance: {
-      providerName: "CVS Health",
-      policyNumber: 123456789
-    }
-  }, 
-  {
-    id: 3,
-    appointmentDate: "7/1/2021",
-    appointmentTime: "1:00pm",
-    vaccineType: "Pfizer",
-    doseNumber: 2,
-    personalInfo: {
-      name: "Jane Deer",
-      address: "789 Main Street, San Francisco, California 00000",
-      email: "jane.deer@gmail.com",
-      phoneNumber: "222-333-4444"
-    },
-    price: 10.0,
-    paymentType: "card",
-    paymentCard: {
-      cardNumber: 123456789,
-      expirationDate: "1/30",
-      securityCode: 123
-    }
-  }
-]]]></ee:set-payload>
-            </ee:message>
-        </ee:transform>
-    </flow>
     <flow name="get:\appointments:covid-vaccine-appointment-scheduler-config">
+        <http:listener doc:name="Listener" doc:id="ee0a7786-12fc-4fcc-98b4-ba2aa5142449" config-ref="httpListenerConfig" path="/appointments"/>
+		<db:select doc:name="Select" doc:id="2768b93a-d977-482b-b17b-b3b878a6f75b" config-ref="databaseConfig">
+			<db:sql ><![CDATA[select * from appointments.available_appointments;]]></db:sql>
+		</db:select>
+		<ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+	doseNumber: payload01.dose_number default 0,
+	appointmentTime: payload01.appointment_time default "",
+	vaccineType: payload01.vaccine_type default "",
+	appointmentDate: payload01.appointment_date default ""
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="8bc4754c-1e5b-4c01-b992-92a63d3bd75f" />
+    </flow>
+	<flow name="post:\appointments:application\json:covid-vaccine-appointment-scheduler-config">
         <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
             <ee:message>
                 <ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
-[
-  {
-    appointmentDate: "7/1/2021",
-    appointmentTime: "1:30pm",
-    vaccineType: "Pfizer",
-    doseNumber: 1
-  }, 
-  {
-    appointmentDate: "7/1/2021",
-    appointmentTime: "1:30pm",
-    vaccineType: "Pfizer",
-    doseNumber: 2
-  }, 
-  {
-    appointmentDate: "7/1/2021",
-    appointmentTime: "1:30pm",
-    vaccineType: "Moderna",
-    doseNumber: 1
-  }, 
-  {
-    appointmentDate: "7/1/2021",
-    appointmentTime: "1:30pm",
-    vaccineType: "Moderna",
-    doseNumber: 2
-  }
-]]]></ee:set-payload>
+{
+  message: "Appointment created"
+}]]></ee:set-payload>
             </ee:message>
         </ee:transform>
     </flow>
-    <flow name="get:\appointments\(id):covid-vaccine-appointment-scheduler-config">
+	<flow name="get:\appointments\(id):covid-vaccine-appointment-scheduler-config">
         <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core">
             <ee:variables>
                 <ee:set-variable variableName="id">attributes.uriParams.'id'</ee:set-variable>
@@ -287,16 +187,91 @@ output application/json
             </ee:message>
         </ee:transform>
     </flow>
-    <flow name="post:\appointments:application\json:covid-vaccine-appointment-scheduler-config">
+	<flow name="put:\appointments\(id):application\json:covid-vaccine-appointment-scheduler-config">
+        <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core">
+            <ee:variables>
+                <ee:set-variable variableName="id">attributes.uriParams.'id'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
         <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
             <ee:message>
                 <ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
 {
-  message: "Appointment created"
+  message: "Appointment successfully updated."
 }]]></ee:set-payload>
             </ee:message>
         </ee:transform>
+    </flow>
+	<flow name="delete:\appointments\(id):covid-vaccine-appointment-scheduler-config">
+        <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core">
+            <ee:variables>
+                <ee:set-variable variableName="id">attributes.uriParams.'id'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  message: "Appointment deleted."
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+	<flow name="get:\appointments\admin:covid-vaccine-appointment-scheduler-config">
+        <http:listener doc:name="Listener" doc:id="020383e3-4dae-47b9-92f4-331d89d1da85" config-ref="httpListenerConfig" path="/appointments/admin"/>
+		<choice doc:name="Choice" doc:id="4ba00c61-85bf-4102-bf5a-816b70965e4b" >
+			<when expression='#[attributes.queryParams.username == "admin" and attributes.queryParams.password == "admin"]'>
+				<db:select doc:name="Select" doc:id="94af7344-e7b8-4da9-9e89-bea7ee309f32" config-ref="databaseConfig">
+			<db:sql><![CDATA[select * from scheduled_appointments;]]></db:sql>
+		</db:select>
+				<ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+	appointmentId: payload01.scheduled_appointment_id,
+	doseNumber: payload01.dose_number default 0,
+	insurance: {
+		policyNumber: payload01.insurance_policy_number as Number default 0,
+		providerName: payload01.insurance_provider_name default ""
+	},
+	personalInfo: {
+		address: payload01.address default "",
+		phoneNumber: payload01.phonenumber default "",
+		name: payload01.full_name default "",
+		email: payload01.email default ""
+	},
+	paymentCard: {
+		securityCode: payload01.payment_card_security_code default "",
+		cardNumber: payload01.payment_card_number default 0,
+		expirationDate: payload01.payment_card_expirationdate default ""
+	},
+	appointmentTime: payload01.appointment_time default "",
+	price: payload01.price default 0,
+	id: payload01.scheduled_appointment_id,
+	vaccineType: payload01.vaccine_type default "",
+	appointmentDate: payload01.appointment_date default "",
+	paymentType: payload01.payment_type default ""
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+			</when>
+			<otherwise >
+				<ee:transform doc:name="Transform Message" doc:id="1501025e-6221-4daf-804a-7e5bf9bb034a" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+'You are not authorized to access these records.']]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</otherwise>
+		</choice>
+		<logger level="INFO" doc:name="Logger" doc:id="82e7322d-58ea-49f1-8314-f34750bdac17" />
     </flow>
 </mule>

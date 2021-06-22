@@ -8,7 +8,8 @@ COVID vaccine appointment scheduler built using MuleSoft and REST. Personal proj
 
 * Anypoint Studio - version 7.9
 * RAML - version 1.0
-* Postgres
+* PostgreSQL
+* PostgreSQL Driver - version 42.2.20
 * DBeaver
 * Visual Studio Code
 
