@@ -35,19 +35,26 @@ To-do list:
 - All the `code` required to get started
 - Images of what it should look like
 
-
-
 ### RAML Specification
+
 Folder: `covid-vaccine-appointment-scheduler-1.0.0-raml`
 Contains RAML specification, data types, and examles.
 
 ### Database Setup
 
-Database Type: Postgres
+Database Type: PostgreSQL
 Database Script Name: `covid-vaccine-appointment-scheduler-database-script.sql`
 Database Name: covid-vaccine-appointment-scheduler
 Schema: appointments
-Table Name: appointments
+
+Tables
+* scheduled_appointments
+* available_appointments
+
+DBeaver Setup
+* 
+
+### MuleSoft Project Setup
 
 
 
