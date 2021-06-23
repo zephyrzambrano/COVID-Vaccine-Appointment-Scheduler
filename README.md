@@ -12,17 +12,18 @@ COVID vaccine appointment scheduler built using MuleSoft and REST. Personal proj
 * PostgreSQL Driver - version 42.2.20
 * DBeaver
 * Visual Studio Code
+* Advanced REST Client (ARC)
 
 ## Features
 
 List of features ready and TODOs for future development
-* Awesome feature 1
-* Awesome feature 2
-* Awesome feature 3
+* Get available appointments
+* Get scheduled appointments (admins only)
 
 To-do list:
-* Wow improvement to be done 1
-* Wow improvement to be done 2
+* Create appointment
+* Update appointment
+* Delete appointment
 
 ## Getting Started
    
@@ -44,29 +45,36 @@ Contains RAML specification, data types, and examles.
 
 Database Type: PostgreSQL
 Database Script Name: `covid-vaccine-appointment-scheduler-database-script.sql`
-Database Name: covid-vaccine-appointment-scheduler
-Schema: appointments
+Database Name: `covid-vaccine-appointment-scheduler`
+Schema: `appointments`
 
-Tables
-* scheduled_appointments
-* available_appointments
+Table Names
+* `scheduled_appointments`
+* `available_appointments`
 
 DBeaver Setup
-* 
+* Create a new database project and name it `covid-vaccine-appointment-scheduler`
+* Using pgAdmin, create a new database named `covid-vaccine-appointment-scheduler` (you will have to log in with the PostgreSQL password you created when installing PostgreSQL)
+* Create a new PostgreSQL connection to the database named `covid-vaccine-appointment-scheduler`
+* Create a new schema named `appointments`
+* Run the `covid-vaccine-appointment-scheduler-database-script.sql` script inside this database project
 
 ### MuleSoft Project Setup
 
-
+* Edit lines 11 and 12 in the `config.yaml` file so that the database username and password are the same as your PostgreSQL username and password.
 
 ## Usage
 
-> Here, you instruct other people on how to use your project after they’ve installed it. This would also be a good place to include screenshots of your project in action.
+Run the MuleSoft project and test the endpoints using Advanced Rest Client (ARC). You may have to run Anypoint Studio as an administrator in order for the project to deploy.
 
-## Contributors
+### Base URL
+http://localhost:8081/
 
-> Here list the people who have contributed to this project. (ignore this section, if its a solo project)
-
-## License
-
-This project uses the following license: [<license_name>](<link>).
-
+### Endpoints
+Flows
+* GET: /appointments
+* POST: /appointments
+* GET: /appointments/(id)
+* PUT: /appointments/(id)
+* DELETE: /appointments/(id)
+* GET: /appointments/admin?username=admin&password=admin
