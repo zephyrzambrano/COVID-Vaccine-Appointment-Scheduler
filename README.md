@@ -22,19 +22,15 @@ List of features ready and TODOs for future development
 
 To-do list:
 * Create appointment
-* Update appointment
-* Delete appointment
+* Get appointment by id
+* Update appointment by id
+* Delete appointment by id
 
 ## Getting Started
-   
-(include git clone command)
-(include all environment setup steps)
 
-> Be sure to include BOTH Windows and Unix command  
-> Be sure to mention if the commands only work on a specific platform (eg. AWS, GCP)
+### Git Clone Command
 
-- All the `code` required to get started
-- Images of what it should look like
+`$ git clone https://github.com/zephyrzambrano/COVID-Vaccine-Appointment-Scheduler.git`
 
 ### RAML Specification
 
